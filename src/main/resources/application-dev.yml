@@ -1,6 +1,6 @@
 spring:
-  data:
-    mongodb:
+    data:
+     mongodb:
       uri: mongodb+srv://anandmehtaa339:Care%40123@cluster0.nvxkqxr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       database: journaldb
       auto-index-creation: true
@@ -14,3 +14,5 @@ logging:
       harshit:
         journalApp: DEBUG
 application:
+
+

@@ -1,5 +1,6 @@
 package com.harshit.journalApp.controller;
 
+import com.harshit.journalApp.cache.AppCache;
 import com.harshit.journalApp.entity.User;
 import com.harshit.journalApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,11 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
+    private AppCache appCache;
+
+    @Autowired
     private UserService userService;
+
 
     @GetMapping("/all-users")
     public ResponseEntity<?> getAllUsers(){
@@ -27,6 +32,14 @@ public class AdminController {
     }
     @PostMapping("/create-admin-user")
     public void createUser(@RequestBody User user){
+        System.out.println("Creating user: " + user.getUserName());
         userService.saveAdmin(user);
     }
+    @GetMapping("clear-app_cache")
+    public void clearAppCache(){
+        appCache.init();
+    }
+
+
+
 }

@@ -1,5 +1,6 @@
 package com.harshit.journalApp.scheduler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.harshit.journalApp.cache.AppCache;
 import com.harshit.journalApp.entity.JournalEntry;
 import com.harshit.journalApp.entity.User;
@@ -22,6 +23,9 @@ import java.util.stream.Collectors;
 @Component
 public class UserScheduler {
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
 
     @Autowired
     private KafkaTemplate<String, SentimentData> kafkaTemplate;
@@ -35,6 +39,7 @@ public class UserScheduler {
 
     @Autowired
     private UserRepositoryImpl userRepository;
+
 
     @Scheduled(cron = "0 0 9 * * SUN")
     public void fetchUserAndSendSaMail() {
@@ -64,12 +69,29 @@ public class UserScheduler {
 
             }
 
+//            if (mostFrequentSentiment != null) {
+//                SentimentData sentimentData = SentimentData.builder().email(user.getEmail()).sentiment("sentiment for last seven days " + mostFrequentSentiment).build();
+//                kafkaTemplate.send("my-topic", sentimentData.getEmail(), sentimentData);
+//
+//            }
+
+
             if (mostFrequentSentiment != null) {
-                SentimentData sentimentData = SentimentData.builder().email(user.getEmail()).sentiment("sentiment for last seven days " + mostFrequentSentiment).build();
-                kafkaTemplate.send("my-topic", sentimentData.getEmail(), sentimentData);
+                SentimentData sentimentData = SentimentData.builder()
+                        .email(user.getEmail())
+                        .sentiment("sentiment for last seven days " + mostFrequentSentiment)
+                        .build();
+
+                try {
+                    kafkaTemplate.send("my-topic", sentimentData);
+                } catch (Exception e) {
+                    emailService.sendEmail(sentimentData.getEmail(), "weekly sentiment summaary", sentimentData.getSentiment() );
+                }
+
 
 
             }
+
         }
     }
 
@@ -77,5 +99,7 @@ public class UserScheduler {
     public void clearAppCache() {
         appCache.init();
     }
+
+
 
 }

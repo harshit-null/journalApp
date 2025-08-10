@@ -1,0 +1,1 @@
+25-08-10 12:54:41.681 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-my-group-1, groupId=my-group] Node -1 disconnected. 

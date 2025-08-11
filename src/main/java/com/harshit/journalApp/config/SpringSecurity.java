@@ -35,6 +35,7 @@ public class SpringSecurity {
         return http.authorizeHttpRequests(request -> request
                         .requestMatchers("/public/**").permitAll()
                         .requestMatchers("/register", "/login").permitAll()
+                        .requestMatchers("/auth/google/callback").permitAll()
                         .requestMatchers("/admin/create-admin-user").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/journal/**", "/user/**").authenticated()

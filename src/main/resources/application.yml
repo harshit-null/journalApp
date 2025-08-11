@@ -1,13 +1,19 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1070535788411-ljpuagvnp2ebm7vf0641fdj0srqiqs3s.apps.googleusercontent.com
+            client-secret: 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
+
   kafka:
     bootstrap-servers: localhost:9092
-
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.add.type.headers: true
-
     consumer:
       group-id: my-group
       auto-offset-reset: earliest
@@ -16,26 +22,17 @@ spring:
       properties:
         spring.json.trusted.packages: com.harshit.journalApp.model
         spring.json.value.default.type: com.harshit.journalApp.model.SentimentData
-
     properties:
       security.protocol: PLAINTEXT
       sasl.mechanism: PLAIN
       sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username='X' password='X';
       session.timeout.ms: 45000
 
-
-
-  redis:
-    host: redis-13510.c301.ap-south-1-1.ec2.redns.redis-cloud.com
-    port: 13510
-    username: default
-    password: pbIHMHni4oitNNtOASZtoYerlRpVrHGN
-    ssl: true
   mail:
     host: smtp.gmail.com
     port: 587
     username: anandmehtaa339@gmail.com
-    password: anlu fxhi pfch qnyc
+    password: your-app-password
     properties:
       mail:
         smtp:
@@ -43,11 +40,19 @@ spring:
           starttls:
             enable: true
             required: true
+
   data:
     mongodb:
       uri: mongodb+srv://anandmehtaa339:Care%40123@cluster0.nvxkqxr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       database: journaldb
       auto-index-creation: true
+
+redis:
+  host: redis-13510.c301.ap-south-1-1.ec2.redns.redis-cloud.com
+  port: 13510
+  username: default
+  password: pbIHMHni4oitNNtOASZtoYerlRpVrHGN
+  ssl: true
 
 server:
   port: 8080
@@ -56,10 +61,6 @@ logging:
   level:
     root: INFO
     org.springframework.boot.SpringApplication: DEBUG
-application:
 
 my:
   apiKey: 9809212e9f139fd17dac93f08068856e
-
-
-

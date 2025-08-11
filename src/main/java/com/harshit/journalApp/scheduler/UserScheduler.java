@@ -8,6 +8,7 @@ import com.harshit.journalApp.enums.Sentiments;
 import com.harshit.journalApp.model.SentimentData;
 import com.harshit.journalApp.repository.UserRepositoryImpl;
 import com.harshit.journalApp.service.EmailService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -35,7 +36,6 @@ public class UserScheduler {
 
     @Autowired
     private EmailService emailService;
-
 
     @Autowired
     private UserRepositoryImpl userRepository;
@@ -66,15 +66,7 @@ public class UserScheduler {
                     maxCount = entry.getValue();
                     mostFrequentSentiment = entry.getKey();
                 }
-
             }
-
-//            if (mostFrequentSentiment != null) {
-//                SentimentData sentimentData = SentimentData.builder().email(user.getEmail()).sentiment("sentiment for last seven days " + mostFrequentSentiment).build();
-//                kafkaTemplate.send("my-topic", sentimentData.getEmail(), sentimentData);
-//
-//            }
-
 
             if (mostFrequentSentiment != null) {
                 SentimentData sentimentData = SentimentData.builder()

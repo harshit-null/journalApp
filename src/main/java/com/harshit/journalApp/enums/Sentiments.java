@@ -7,8 +7,8 @@ public enum Sentiments {
 
     SAD,
 
-    ANGRYY,
+    ANGRY,
 
-    ANXIOUS;
+    ANXIOUS
 
 }
